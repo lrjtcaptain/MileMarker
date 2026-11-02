@@ -1,6 +1,7 @@
 import {parseCSV,point,MILE,project,candidates,progressFix,navigationURL,dieselLabel,itineraryRows,haversine} from './core.js';
 import {Router} from './routing.js';
 import {validateStopTargets,fitsDrivingTarget} from './planner.js';
+import {restoreOriginalPlan} from './original-plan-bridge.js';
 const $2=s=>document.querySelector(s),safe=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 async function csv(name){const r=await fetch(`data/${name}.csv`);if(!r.ok)throw Error(name+' data unavailable');return parseCSV(await r.text());}
 const [places2,anchors,badges,settings]=await Promise.all(['places','anchors','achievements','settings'].map(csv));
@@ -11,7 +12,8 @@ let budgetHours=Number(saved.budgetHours)||Number(clockPlan.hours)||9;
 let base=null,active=null,origin=null,destination=null,progress=0,fix=null,watch=null,busy=false,options=new Map(),revision=0;
 function packRoute(r){return r?Object.fromEntries(['distance','duration','coords','cum','time','highways','fetched_at'].map(k=>[k,r[k]]).concat([['legs',r.legs.map(l=>({distance:l.distance,duration:l.duration}))]])):null;}
 function persist2(){try{localStorage.setItem(stateKey,JSON.stringify({budgetHours,mode,optIn,nav,targets,chosen,earned:[...earned],from:$2('#mmFrom').value,to:$2('#mmTo').value,departure:$2('#mmDeparture').value,origin,destination,base:packRoute(base),active:packRoute(active)}));}catch{status('Browser storage is full; export your trip.');}}
-function status(message,error=false){$2('#mmStatus').textContent=message;$2('#mmStatus').classList.toggle('error',error);}
+let onOriginalState=()=>{};
+function status(message,error=false){onOriginalState();$2('#mmStatus').textContent=message;$2('#mmStatus').classList.toggle('error',error);}
 function lock(on){busy=on;document.querySelectorAll('#tripPanel .mm2 input,#tripPanel .mm2 select,#tripPanel .mm2 button,#mmRest').forEach(e=>e.disabled=on);}
 const legacyPlan=document.createElement('div');legacyPlan.className='legacy-plan';legacyPlan.append(...$2('#tripPanel').childNodes);$2('#tripPanel').append(legacyPlan);
 const panel=document.createElement('div');panel.className='mm2 simple-plan';panel.innerHTML=`
@@ -54,11 +56,11 @@ function validateTargets(){budgetHours=Number($2('#mmHours').value);return valid
 async function resolveLocation(text){const a=anchors.find(a=>a.name.toLowerCase()===text.trim().toLowerCase());if(a)return {...a,coords:point(a)};const m=text.trim().match(/^(-?\d+(?:\.\d+)?)\s*,\s*(-?\d+(?:\.\d+)?)$/);if(m){const la=Number(m[1]),lo=Number(m[2]);if(la>=36.9&&la<=43.6&&lo>=-96.8&&lo<=-87.4)return {name:text,coords:[lo,la]};}throw Error('Choose an Illinois / Iowa city from the list, search a city, or enter latitude, longitude.');}
 async function build(){if(busy)return;lock(true);status('Calculating road route…');try{const a=await resolveLocation($2('#mmFrom').value),b=await resolveLocation($2('#mmTo').value);if(haversine(a.coords,b.coords)<100)throw Error('Choose different start and destination points.');const r=await router.route([a.coords,b.coords]);origin=a;destination=b;base=r;active=null;progress=0;fix=null;stopGps2();chosen=[];options.clear();revision++;paintTargets();drawRoute();paintItinerary();directory();paintDrive2();persist2();status('Road route ready. Find timed stops or browse below.');}catch(e){status(e.message,true);}finally{lock(false);}}
 async function suggest(){if(!base){status('Calculate your route first.',true);return;}if(busy)return;let ts;try{ts=validateTargets();}catch(e){status(e.message,true);return;}lock(true);options.clear();chosen=[];active=null;paintTargets();drawRoute();paintItinerary();const rev=revision;try{const max=Number($2('#mmDetour').value);if(!(max>=1&&max<=60))throw Error('Use a detour limit from 1 to 60 minutes.');let after=0,pauses=0;
- for(let i=0;i<ts.length;i++){const t=ts[i],targetSeconds=t.hours*3600;const pool=candidates(places2,base,{mode,optIn,category:t.kind==='park'?(mode==='roadtrip'?'hotel':'truck_stop'):t.kind==='fuelpark'?'fuel':t.kind,after}).sort((a,b)=>Math.abs(a.seconds-targetSeconds)-Math.abs(b.seconds-targetSeconds)).slice(0,6);const found=[];
+ for(let i=0;i<ts.length;i++){const t=ts[i],targetSeconds=t.hours*3600;const pool=candidates(places2,base,{mode,optIn,category:t.kind==='park'?(mode==='roadtrip'?'hotel':'truck_stop'):t.kind==='fuelpark'?'fuel':t.kind,after}).filter(x=>t.kind!=='food'||!clockPlan.foodBrand||clockPlan.foodBrand==='any'||x.p.brand_id===clockPlan.foodBrand).sort((a,b)=>Math.abs(a.seconds-targetSeconds)-Math.abs(b.seconds-targetSeconds)).slice(0,6);const found=[];
  for(const c of pool){status(`Checking road access · stop ${i+1}/${ts.length} · ${c.p.name}`);const routed=await router.route([origin.coords,point(c.p),destination.coords]);const added=Math.max(0,routed.duration-base.duration)/60,arrival=routed.legs[0].duration;if(added<=max&&fitsDrivingTarget(t.kind,arrival,t.hours,budgetHours)&&arrival<base.duration){found.push({...c,routed,arrival,added});}if(found.length>=3)break;}
  if(rev!==revision)return;options.set(i,found);if(found.length){const best=found.sort((a,b)=>Math.abs(a.arrival-t.hours*3600)-Math.abs(b.arrival-t.hours*3600))[0];chosen[i]=best.p.id;after=best.meters;}else chosen[i]=null;pauses+=t.pause;paintOptions(i);
  }status('Pick the stops you like, then save.');persist2();}catch(e){status(e.message,true);}finally{lock(false);}}
-function paintOptions(i){$2('#mmOptions'+i).closest('.simple-stage').hidden=false;const found=options.get(i)||[];$2('#mmOptions'+i).innerHTML=found.length?found.map(x=>card2(x.p,`<small>${Math.round(x.routed.legs[0].distance/MILE)} road mi from start · +${Math.round(x.added)} road min · target arrival ~${duration(x.arrival)}</small>`,`<button data-choice="${safe(x.p.id)}" data-stage="${i}" ${chosen[i]===x.p.id?'class="primary"':''}>${chosen[i]===x.p.id?'Selected':'Choose'}</button>`)).join(''):'<p class="muted">No matching routed stop within one hour of this target and your detour limit. Change this target or choose from the route directory.</p>';}
+function paintOptions(i){onOriginalState();$2('#mmOptions'+i).closest('.simple-stage').hidden=false;const found=options.get(i)||[];$2('#mmOptions'+i).innerHTML=found.length?found.map(x=>card2(x.p,`<small>${Math.round(x.routed.legs[0].distance/MILE)} road mi from start · +${Math.round(x.added)} road min · target arrival ~${duration(x.arrival)}</small>`,`<button data-choice="${safe(x.p.id)}" data-stage="${i}" ${chosen[i]===x.p.id?'class="primary"':''}>${chosen[i]===x.p.id?'Selected':'Choose'}</button>`)).join(''):'<p class="muted">No matching routed stop within one hour of this target and your detour limit. Change this target or choose from the route directory.</p>';}
 async function apply(){if(busy)return;if(!base){status('Calculate the route first.',true);return;}const selected=chosen.map(id=>places2.find(p=>p.id===id)).filter(Boolean);if(!selected.length){status('Select at least one stop.',true);return;}if(new Set(selected.map(p=>p.id)).size!==selected.length){status('Choose a different place for each stop.',true);return;}const positions=selected.map(p=>project(base,point(p)).meters);if(positions.some((p,i)=>i&&p<=positions[i-1])){status('Stops must follow the route from start to destination. Reselect the middle stops.',true);return;}lock(true);status('Routing your complete stop sequence…');try{const r=await router.route([origin.coords,...selected.map(point),destination.coords]);const rows=itineraryRows(r,selected.map((p,i)=>({...p,visit_minutes:targets[i]?.pause??p.visit_minutes})),departure());const ts=validateTargets();if(rows.some((r,i)=>ts[i]&&!fitsDrivingTarget(ts[i].kind,r.driveSeconds,ts[i].hours,budgetHours))){throw Error('These stops do not fit your driving hours. Choose an earlier stop or adjust your hours.');}active=r;chosen=selected.map(p=>p.id);persist2();drawRoute();paintItinerary();paintDrive2();status('Itinerary saved on this device. Every middle stop is available in Plan and Drive.');}catch(e){active=null;status(e.message,true);}finally{lock(false);}}
 function selectedRows(){if(!active)return [];return itineraryRows(active,chosen.map((id,i)=>({...places2.find(p=>p.id===id),visit_minutes:targets[i]?.pause??15})),departure());}
 const applyUnchecked=apply;apply=async function(){if(targets.length!==chosen.length||targets.some((_,i)=>!chosen[i]||!places2.some(p=>p.id===chosen[i]))){status('Select a matching place for every stop target, or remove unmatched targets first.',true);return;}return applyUnchecked();};
@@ -118,3 +120,40 @@ paintTargets();paintBadges();drawRoute();paintItinerary();directory();paintDrive
 // Reload never reuses an old road ETA silently. Saved selections remain editable, routes recalculate explicitly.
 status('');syncRouteLabel();
 window.MileMarkerBeta2={version:'2.0.0',places:places2,router,acceptFix,getState:()=>({base,active,mode,optIn,chosen,progress,busy})};
+
+restoreOriginalPlan({
+ setMode(value){$2('#mmMode').value=value;$2('#mmMode').onchange();},
+ refreshMode(){
+  if(mode==='roadtrip')needLabels.hotel='Hotel';else delete needLabels.hotel;
+  if(mode==='roadtrip'&&optIn)needLabels.attraction='Fun stop / museum';else delete needLabels.attraction;
+  clockPlan.needs=clockPlan.needs.filter(n=>needLabels[n.kind]);if(!clockPlan.needs.length)clockPlan.needs=[{kind:'park',hours:Number($2('#clockHours').value)||4}];
+  paintNeeds();paintTargets();
+ },
+ watchState(fn){onOriginalState=fn;},
+ hasChoices(){return options.size>0;},
+ async findFromOriginal(){
+  if(busy)return;readClock();budgetHours=Number(clockPlan.hours);$2('#mmHours').value=budgetHours;
+  targets=clockPlan.needs.map(n=>({kind:n.kind,hours:Number(n.hours),pause:Number(clockPlan.breakMinutes)||30}));
+  try{validateTargets();}catch(e){status(e.message,true);return;}
+  const a=originGpsPoint||clockPlan.originCity;
+  const b=clockPlan.destinationCity;
+  const originAnchor=anchors.find(p=>p.name.split(',')[0]===clockPlan.start);
+  const originPlace=places2.find(p=>p.city===clockPlan.start);
+  const start=a&&Number.isFinite(Number(a.latitude))&&Number.isFinite(Number(a.longitude))?a:originAnchor||originPlace;
+  if(!start){status('Choose your current location or starting town.',true);return;}
+  if(!b||!Number.isFinite(Number(b.latitude))||!Number.isFinite(Number(b.longitude))){status('Search for and select your destination town.',true);return;}
+  const from=`${Number(start.latitude).toFixed(6)}, ${Number(start.longitude).toFixed(6)}`,to=`${Number(b.latitude).toFixed(6)}, ${Number(b.longitude).toFixed(6)}`;
+  const changed=$2('#mmFrom').value!==from||$2('#mmTo').value!==to;
+  $2('#mmFrom').value=from;$2('#mmTo').value=to;
+  const now=new Date(Date.now()-new Date().getTimezoneOffset()*60000);$2('#mmDeparture').value=now.toISOString().slice(0,16);
+  clockPlan.foodBrand=$2('#mealBrand').value||'any';writeLocal(CLOCK_KEY,clockPlan);
+  if(changed||!base)await build();
+  if(!base)return;
+  origin.name=clockPlan.originLabel||clockPlan.start;destination.name=cityLabel(b);drawRoute();
+  $2('#mmChoicesHeading').hidden=false;await suggest();$2('#mmApply').hidden=false;
+  $2('#clockResults').classList.remove('hidden');
+ }
+});
+const resetOriginalDay=resetToday;resetToday=function(){resetOriginalDay();budgetHours=Number(clockPlan.hours)||4;$2('#mmHours').value=budgetHours;$2('#mmReset').onclick();$2('#clockResults').classList.add('hidden');};
+const saveRoutedStops=$2('#mmApply').onclick;$2('#mmApply').onclick=async()=>{await saveRoutedStops();if(!active)return;trip=chosen.map(id=>{const record=places2.find(p=>p.id===id);const oldId=byId[id]?id:byId['food_'+id]?'food_'+id:id;if(!byId[oldId]){const sourceId='beta2_'+id;sources[sourceId]={source_id:sourceId,publisher:'Beta 2 listing source',url:record.source_url,checked_on:record.checked_on};byId[oldId]={...Object.fromEntries(Object.keys(places[0]).map(k=>[k,null])),place_id:oldId,name:record.name,city:record.city,state:record.state,address:record.address,latitude:Number(record.latitude),longitude:Number(record.longitude),place_type:record.category,record_status:record.status==='OSM listed'?'community_listed':'operator_listed',branch:record.state==='IA'?'I-80 IA':clockPlan.branch,identity_source_id:sourceId,source_ids:[sourceId],brand_id:record.brand_id,logo_status:window.MM_DATA.BRANDS[record.brand_id]?'bundled':'not_yet_sourced'};}return oldId;});persist();journey={...journey,origin:origin.name,destination:destination.name};writeLocal('milemarker.journey.v1',journey);syncJourney();};
+$2('#exportTrip').onclick=$2('#mmExport').onclick;
