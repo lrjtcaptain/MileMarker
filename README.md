@@ -13,9 +13,11 @@ For a local test, open a terminal in the unzipped folder and run `python -m http
 
 ## First trip
 
-Open **PLAN**. Start with Downers Grove, IL → Council Bluffs, IA. Calculate the route, then try **food after 3 hours** and **fuel after 6 hours**. Press **Find timed stops**, review the choices for every stop, and **Save selected itinerary**. Each middle stop has its own selection and details. Remove a target if the limited starter database has no suitable match.
+Open **PLAN**. Tap the large **TRUCK** or **ROAD TRIP** button at the top. Enter **how many driving hours are left**, choose **Food stop / Diesel stop / Park for the night / Diesel + park**, and set **after how many driving hours**. Tap **Find my stops**. The app calculates the road route behind that button, shows choices for each stop, and lets you save your selected stops.
 
-Target hours mean elapsed time after departure, including earlier breaks. Suggestions must be within one hour of the requested time and inside the chosen added-road-time limit. The final saved sequence is routed again as one trip; a combined sequence that misses a target by more than one hour is rejected. Candidate screening uses up to six nearby records per target to keep public-service traffic low. It is a beta heuristic, not an exhaustive optimizer or HOS log.
+Quick presets restore the original flow: **4 hours · park**, or **Food in 3h · diesel & park in 9h**. Starting town and destination are in the collapsed route row; departure time, detour limit and break duration are under Planning options. Road Trip mode has a simple **Show fun stops & museums** checkbox.
+
+Stop targets now mean driving hours, matching the original app. Earlier break durations affect clock ETAs but do not consume the entered driving-hours budget. Food/diesel may be up to 30 minutes after the requested target, within hours left. Parking must be at or before its target. Road-route estimates and source records are retained.
 
 In **DRIVE**, the highway summary uses the saved itinerary route. The big mileage/time display counts down to the next planned stop from GPS road progress. **All itinerary stops** exposes every middle stop. **Next direction-correct rest area** checks DOT travel direction, route highway, forward progress, and routed access before offering navigation.
 
