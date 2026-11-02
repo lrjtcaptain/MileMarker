@@ -1,0 +1,4 @@
+key,value,notes
+routing_base,https://router.project-osrm.org/route/v1/driving,Demo road routing; replace for production. Not a truck restriction profile.
+max_detour_minutes,15,Maximum added road travel time per candidate stop.
+attractions_opt_in,false,Road Trip mode must explicitly opt in.

@@ -1,0 +1,27 @@
+{
+  "build": "MileMarker Beta 2",
+  "collected_on": "2026-11-02",
+  "supplied_app": "editable_food_database.zip",
+  "supplied_zip_sha256": "337360297b2970cba96e52fc5b9e7fa77d4468d7cf6c21a59c5cdca0b1bd9535",
+  "record_count": 1846,
+  "counts": {
+    "attraction": 714,
+    "food": 213,
+    "hotel": 793,
+    "parking": 14,
+    "rest_area": 90,
+    "truck_stop": 22
+  },
+  "sources": {
+    "iowa_rest_areas": "https://services.arcgis.com/8lRhdTsQyJpO52F1/arcgis/rest/services/Rest_Areas_All/FeatureServer",
+    "illinois_rest_areas": "https://services2.arcgis.com/aIrBD8yn1TDTEXoz/ArcGIS/rest/services/IL_Rest_Areas/FeatureServer/0",
+    "osm": "https://overpass-api.de/api/interpreter",
+    "state_boundaries": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/State_County/MapServer/0",
+    "routing": "https://router.project-osrm.org/route/v1/driving"
+  },
+  "osm_query": "[out:json][timeout:90];(nwr[\"tourism\"~\"^(museum|attraction|hotel)$\"][\"name\"](41.1,-96.0,42.0,-87.4););out center tags;",
+  "osm_raw_sha256": "bb129638620e2d45994d7a4d1a5ce58966deb1128dd306a378df70334b9bfaf5",
+  "filters": "Named objects; latitude 40.95..42, longitude -95.9..-87.5; IL/IA Census point-in-polygon. Feature centers where point unavailable. Old Wilton WB restroom row omitted in favor of current no-services parking record.",
+  "scope": "Regional discovered starter plus inherited operator records and official rest layers. Not exhaustive; not live status.",
+  "diesel_prices_populated": false
+}

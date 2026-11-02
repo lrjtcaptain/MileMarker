@@ -1,0 +1,6 @@
+id,title,description,latitude,longitude,radius_miles,source_url,notes
+walcott,ALL ROADS LEAD TO WALCOTT,Welcome to the World's Largest Truckstop.,41.6188,-90.7828,0.6,https://iowa80truckstop.com/,GPS proximity or manual check-in; road-level presence not certified.
+heaven,IS THIS HEAVEN,No. It’s Iowa.,42.4975,-91.054,0.4,https://www.fieldofdreamsmoviesite.com/,GPS proximity or manual check-in; road-level presence not certified.
+bears,BEAR COUNTRY,Chicago. Keep rolling.,41.8623,-87.6167,0.5,https://www.soldierfield.com/,GPS proximity or manual check-in; road-level presence not certified.
+sioux,SIOUX CITY STRONG,Where the rivers meet the road.,42.499,-96.4,1,https://www.sioux-city.org/,GPS proximity or manual check-in; road-level presence not certified.
+wacker,LOWER WACKER DRIVE,Welcome to the underworld. Even your GPS is scared.,41.887,-87.631,0.15,https://www.chicago.gov/,GPS proximity or manual check-in; road-level presence not certified.

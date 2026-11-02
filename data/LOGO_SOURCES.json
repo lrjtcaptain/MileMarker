@@ -1,0 +1,128 @@
+[
+  {
+    "id": "pilot",
+    "name": "Pilot Flying J",
+    "url": "https://logotyp.us/file/pilot-flying-j.svg",
+    "page": "https://logotyp.us/get/pilot-flying-j/",
+    "retrieved_on": "2026-11-01",
+    "use": "Place identification; trademarks belong to their owners",
+    "official": false
+  },
+  {
+    "id": "bluebeacon",
+    "name": "Blue Beacon",
+    "url": "https://bluebeacon.com/wp-content/themes/indiciawp/images/blue-beacon-logo-full-color-outline-rgb.svg",
+    "page": "https://bluebeacon.com/",
+    "retrieved_on": "2026-11-01",
+    "use": "Place identification; trademarks belong to their owners",
+    "official": true
+  },
+  {
+    "id": "roadranger",
+    "name": "Road Ranger",
+    "url": "https://www.roadrangerusa.com/themes/custom/roadranger/images/RR-Logo-Horiz.png",
+    "page": "https://www.roadrangerusa.com/",
+    "retrieved_on": "2026-11-01",
+    "use": "Place identification; trademarks belong to their owners",
+    "official": true
+  },
+  {
+    "id": "truckomat",
+    "name": "Truckomat",
+    "url": "https://truckomat.com/wp-content/themes/truckomat/images/logo.png",
+    "page": "https://truckomat.com/",
+    "retrieved_on": "2026-11-01",
+    "use": "Place identification; trademarks belong to their owners",
+    "official": true
+  },
+  {
+    "id": "ta",
+    "name": "TravelCenters of America",
+    "url": "https://cdn.ta-petro.com/media/drla0454/ta-corp-logo-stacked-primary.svg",
+    "page": "https://www.ta-petro.com/",
+    "retrieved_on": "2026-11-01",
+    "use": "Place identification; trademarks belong to their owners",
+    "official": true
+  },
+  {
+    "id": "iowa80",
+    "name": "Iowa 80",
+    "url": "https://iowa80truckstop.com/wp-content/uploads/2024/12/cropped-WLT-Logo.png",
+    "page": "https://iowa80truckstop.com/",
+    "retrieved_on": "2026-11-01",
+    "use": "Place identification; trademarks belong to their owners",
+    "official": true
+  },
+  {
+    "id": "loves",
+    "name": "Love’s",
+    "url": "https://edge.sitecorecloud.io/lovestravela9dd-loves2161-lovesprod042a-cf5a/media/project/loves/default/logo_top-(2).png?h=100&iar=0&w=388",
+    "page": "https://www.loves.com/",
+    "retrieved_on": "2026-11-01",
+    "use": "Place identification; trademarks belong to their owners",
+    "official": true
+  },
+  {
+    "id": "petro",
+    "name": "Petro Stopping Centers",
+    "url": "https://upload.wikimedia.org/wikipedia/commons/b/b0/Petro_Stopping_Centers_logo.svg",
+    "page": "https://commons.wikimedia.org/wiki/File:Petro_Stopping_Centers_logo.svg",
+    "retrieved_on": "2026-11-01",
+    "use": "Brand identification; trademarks belong to their owners",
+    "official": false
+  },
+  {
+    "id": "sapp",
+    "name": "Sapp Bros. Travel Centers",
+    "url": "https://excelcres.com/wp-content/uploads/2022/02/Sapp_Bros-logo.png",
+    "page": "https://excelcres.com/community/sapp-bros-acquire-20-acres/",
+    "retrieved_on": "2026-11-01",
+    "use": "Brand identification; trademarks belong to their owners",
+    "official": false
+  },
+  {
+    "id": "kwikstar",
+    "name": "Kwik Star",
+    "url": "https://images.squarespace-cdn.com/content/v1/644cefbee9568e707cc32b54/d00444a1-9309-4251-8230-f249aef27416/PlexBusinesses-KwikStar.png",
+    "page": "https://www.theplexqc.com/businesses/kwik-star",
+    "retrieved_on": "2026-11-01",
+    "official": false,
+    "use": "Brand identification; trademark belongs to owner"
+  },
+  {
+    "id": "lovesSquare",
+    "name": "Love’s Travel Stops",
+    "url": "https://i.forbesimg.com/media/lists/companies/loves-travel-stops-country-stores_416x416.jpg",
+    "page": "https://www.forbes.com/companies/loves-travel-stops-country-stores/",
+    "official": false,
+    "retrieved_on": "2026-11-01",
+    "use": "Brand identification; trademark belongs to owner"
+  },
+  {
+    "id": "flyingJSquare",
+    "name": "Pilot Flying J",
+    "url": "https://dynl.mktgcdn.com/p/a-rwoF61Yo7rdbP3o7byqR-Z8Mc2bBogljIWKs_XRbI/1667x1667.png",
+    "page": "https://locations.pilotflyingj.com/us/az/kingman/3300-e-andy-devine-ave",
+    "official": true,
+    "retrieved_on": "2026-11-01",
+    "use": "Brand identification; trademark belongs to owner"
+  },
+  {
+    "id": "tacojohns",
+    "name": "Taco John’s",
+    "url": "https://llp-assets.meetsoci.com/live/assets/tacojohnsites/images/header/tacojohns-logo_stacked.png",
+    "page": "https://locations.tacojohns.com/index/",
+    "official": true,
+    "retrieved_on": "2026-11-01",
+    "use": "Restaurant identification; trademark belongs to owner"
+  },
+  {
+    "id": "godfathers",
+    "name": "Godfather’s Pizza",
+    "url": "https://godfathers.com/wp-content/uploads/2024/09/logo.svg",
+    "page": "https://godfathers.com/",
+    "official": true,
+    "retrieved_on": "2026-11-01",
+    "use": "Restaurant identification; trademark belongs to owner"
+  }
+]
