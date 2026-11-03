@@ -55,7 +55,7 @@
   },
   {
     "id": "loves",
-    "name": "Love’s",
+    "name": "Loveâ€™s",
     "url": "https://edge.sitecorecloud.io/lovestravela9dd-loves2161-lovesprod042a-cf5a/media/project/loves/default/logo_top-(2).png?h=100&iar=0&w=388",
     "page": "https://www.loves.com/",
     "retrieved_on": "2026-11-01",
@@ -91,7 +91,7 @@
   },
   {
     "id": "lovesSquare",
-    "name": "Love’s Travel Stops",
+    "name": "Loveâ€™s Travel Stops",
     "url": "https://i.forbesimg.com/media/lists/companies/loves-travel-stops-country-stores_416x416.jpg",
     "page": "https://www.forbes.com/companies/loves-travel-stops-country-stores/",
     "official": false,
@@ -109,7 +109,7 @@
   },
   {
     "id": "tacojohns",
-    "name": "Taco John’s",
+    "name": "Taco Johnâ€™s",
     "url": "https://llp-assets.meetsoci.com/live/assets/tacojohnsites/images/header/tacojohns-logo_stacked.png",
     "page": "https://locations.tacojohns.com/index/",
     "official": true,
@@ -118,11 +118,56 @@
   },
   {
     "id": "godfathers",
-    "name": "Godfather’s Pizza",
+    "name": "Godfatherâ€™s Pizza",
     "url": "https://godfathers.com/wp-content/uploads/2024/09/logo.svg",
     "page": "https://godfathers.com/",
     "official": true,
     "retrieved_on": "2026-11-01",
+    "use": "Restaurant identification; trademark belongs to owner"
+  },
+  {
+    "id": "wendys",
+    "name": "Wendy’s",
+    "url": "https://www.wendys.com/sites/default/files/styles/max_325x325/public/2026-11/wendys-logo.png?itok=8CTzVwWO",
+    "page": "https://www.wendys.com/",
+    "retrieved_on": "2026-11-02",
+    "official": true,
+    "use": "Restaurant identification; trademark belongs to owner"
+  },
+  {
+    "id": "tacobell",
+    "name": "Taco Bell",
+    "url": "https://www.tacobell.com/_static/web/icons/tb-desktop-logo.svg",
+    "page": "https://www.tacobell.com/food",
+    "retrieved_on": "2026-11-02",
+    "official": true,
+    "use": "Restaurant identification; trademark belongs to owner"
+  },
+  {
+    "id": "pizzahut",
+    "name": "Pizza Hut",
+    "url": "https://images.ctfassets.net/vmq7l74niu4y/7hOAvwEPPoorCe6fNRGgcw/a7130b1a25eec8ce5bb9e5175bb2d9b1/US-WebNAV-HeaderLogo-091426.svg",
+    "page": "https://www.pizzahut.com/",
+    "retrieved_on": "2026-11-02",
+    "official": true,
+    "use": "Restaurant identification; trademark belongs to owner"
+  },
+  {
+    "id": "dq",
+    "name": "Dairy Queen / Orange Julius",
+    "url": "https://dairyqueen-prod.dotcdn.io/application/themes/dairyqueen/assets/images/logos/dq-logo.svg",
+    "page": "https://www.dairyqueen.com/en-us/",
+    "retrieved_on": "2026-11-02",
+    "official": true,
+    "use": "Restaurant identification; trademark belongs to owner"
+  },
+  {
+    "id": "starbucks",
+    "name": "Starbucks",
+    "url": "https://www.starbucks.com/assets/icons/siren.svg",
+    "page": "https://www.starbucks.com/",
+    "retrieved_on": "2026-11-02",
+    "official": true,
     "use": "Restaurant identification; trademark belongs to owner"
   }
 ]
