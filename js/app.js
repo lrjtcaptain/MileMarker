@@ -1,9 +1,9 @@
 import {parseCSV,point,MILE,project,candidates,progressFix,navigationURL,dieselLabel,itineraryRows,haversine} from './core.js';
 import {Router} from './routing.js';
-import {validateStopTargets,fitsDrivingTarget,foodPreferenceMatches,foodOfferTiming} from './planner.js';
-import {restoreOriginalPlan} from './original-plan-bridge.js';
-import {installFoodPicker} from './food-picker.js';
-import {foodTypeMatches,FOOD_TYPES} from './food-types.js';
+import {validateStopTargets,fitsDrivingTarget,foodPreferenceMatches,foodOfferTiming} from './planner.js?v=repair3';
+import {restoreOriginalPlan} from './original-plan-bridge.js?v=repair3';
+import {installFoodPicker} from './food-picker.js?v=repair3';
+import {foodTypeMatches,FOOD_TYPES} from './food-types.js?v=repair3';
 const $2=s=>document.querySelector(s),safe=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 async function csv(name){const r=await fetch(`data/${name}.csv`);if(!r.ok)throw Error(name+' data unavailable');return parseCSV(await r.text());}
 const [places2,anchors,badges,settings]=await Promise.all(['places','anchors','achievements','settings'].map(csv));
