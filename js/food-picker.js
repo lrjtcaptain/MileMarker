@@ -1,4 +1,4 @@
-import {FOOD_TYPES,foodTypeMatches} from './food-types.js';
+import {FOOD_TYPES,foodTypeMatches} from './food-types.js?v=repair3';
 export function installFoodPicker({places,onPreferenceChange}){
  const q=s=>document.querySelector(s);const records=new Map(places.filter(p=>p.category==='food').map(p=>[p.id,p]));
  const options=FOOD_TYPES.map(([id,label])=>`<option value="${id}">${label}</option>`).join('');
@@ -7,7 +7,7 @@ export function installFoodPicker({places,onPreferenceChange}){
  q('#mealBrandText').before(label,select);q('#mealBrandText').placeholder='Restaurant name or town';
  const browseLabel=document.createElement('label');browseLabel.htmlFor='mmBrowseFoodType';browseLabel.textContent='Food type';
  const browse=document.createElement('select');browse.id='mmBrowseFoodType';browse.innerHTML=options;
- q('#foodBrowseBrand').before(browseLabel,browse);
+ browseLabel.append(browse);(q('#foodBrowseBrand').closest('label')||q('#foodBrowseBrand')).before(browseLabel);
  const originalRows=foodListRows;foodListRows=function(query,brand,statewide){return originalRows(query,brand,statewide).filter(p=>foodTypeMatches(records.get(p.restaurant_id)||p,browse.value));};
  const updateSummary=updateMealSummary;updateMealSummary=function(){updateSummary();const matches=FOOD_DB.restaurants.filter(p=>mealMatches(p)&&foodTypeMatches(records.get(p.restaurant_id)||p,select.value));q('#mealBrandStatus').textContent=matches.length+' collected matches · browse the food database to choose a location.';};
  select.onchange=()=>{clockPlan.foodStyle=select.value;clockPlan.foodBrand='any';clockPlan.foodQuery='';q('#mealBrand').value='any';q('#mealBrandText').value='';delete clockPlan.foodPlaceId;ensureMealStage();onPreferenceChange();writeLocal(CLOCK_KEY,clockPlan);updateMealSummary();};
