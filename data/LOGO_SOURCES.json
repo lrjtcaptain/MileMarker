@@ -55,7 +55,7 @@
   },
   {
     "id": "loves",
-    "name": "Loveâ€™s",
+    "name": "LoveÃ¢â‚¬â„¢s",
     "url": "https://edge.sitecorecloud.io/lovestravela9dd-loves2161-lovesprod042a-cf5a/media/project/loves/default/logo_top-(2).png?h=100&iar=0&w=388",
     "page": "https://www.loves.com/",
     "retrieved_on": "2026-11-01",
@@ -91,7 +91,7 @@
   },
   {
     "id": "lovesSquare",
-    "name": "Loveâ€™s Travel Stops",
+    "name": "LoveÃ¢â‚¬â„¢s Travel Stops",
     "url": "https://i.forbesimg.com/media/lists/companies/loves-travel-stops-country-stores_416x416.jpg",
     "page": "https://www.forbes.com/companies/loves-travel-stops-country-stores/",
     "official": false,
@@ -109,7 +109,7 @@
   },
   {
     "id": "tacojohns",
-    "name": "Taco Johnâ€™s",
+    "name": "Taco JohnÃ¢â‚¬â„¢s",
     "url": "https://llp-assets.meetsoci.com/live/assets/tacojohnsites/images/header/tacojohns-logo_stacked.png",
     "page": "https://locations.tacojohns.com/index/",
     "official": true,
@@ -117,17 +117,8 @@
     "use": "Restaurant identification; trademark belongs to owner"
   },
   {
-    "id": "godfathers",
-    "name": "Godfatherâ€™s Pizza",
-    "url": "https://godfathers.com/wp-content/uploads/2024/09/logo.svg",
-    "page": "https://godfathers.com/",
-    "official": true,
-    "retrieved_on": "2026-11-01",
-    "use": "Restaurant identification; trademark belongs to owner"
-  },
-  {
     "id": "wendys",
-    "name": "Wendy’s",
+    "name": "Wendyâ€™s",
     "url": "https://www.wendys.com/sites/default/files/styles/max_325x325/public/2026-11/wendys-logo.png?itok=8CTzVwWO",
     "page": "https://www.wendys.com/",
     "retrieved_on": "2026-11-02",
@@ -169,5 +160,13 @@
     "retrieved_on": "2026-11-02",
     "official": true,
     "use": "Restaurant identification; trademark belongs to owner"
+  },
+  {
+    "id": "godfathers",
+    "name": "Godfather’s Pizza",
+    "source": "User-supplied red square logo attachment",
+    "retrieved_on": "2026-11-02",
+    "use": "Restaurant identification; trademark belongs to owner",
+    "official": false
   }
 ]
