@@ -1,6 +1,6 @@
 # MileMarker Beta 2
 
-This is the working GitHub Pages package, integrated into the navy MileMarker app supplied in `editable_food_database.zip`. Garage, truck drawing, Drive cards, food catalog, favorites and private notes are retained. Beta 2 adds road routing and a new time-based Plan panel. No build or API key is required to try the beta.
+This is the working GitHub Pages package, integrated into the navy MileMarker app supplied in `editable_food_database.zip`. Garage, truck drawing, Drive cards, food catalog, favorites and private notes are retained. Beta 2 connects road routing to the original simple Plan form. No build or API key is required to try the beta.
 
 ## Deploy to GitHub Pages
 
@@ -21,7 +21,7 @@ Targets mean driving hours. Break durations affect clock ETA separately. Food/di
 
 In **DRIVE**, the highway summary uses the saved itinerary route. The big mileage/time display counts down to the next planned stop from GPS road progress. **All itinerary stops** exposes every middle stop. **Next direction-correct rest area** checks DOT travel direction, route highway, forward progress, and routed access before offering navigation.
 
-Road Trip mode includes hotels and unknown-truck-access food. Museums and attractions require the **TAKE A BREAK** checkbox. Truck mode excludes unknown truck access. Listing a truck stop does not certify its entrance, clearances, parking availability or legal overnight use.
+Road Trip mode includes hotels and unknown-truck-access food. Museums and attractions require the **TAKE A BREAK** checkbox. Truck mode excludes unknown truck access by default; an explicitly requested restaurant can be offered with unverified access clearly labeled for review. Listing a truck stop does not certify its entrance, clearances, parking availability or legal overnight use.
 
 ## Editable master and CSV data
 

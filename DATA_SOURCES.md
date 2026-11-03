@@ -16,6 +16,8 @@ The old Wilton westbound rest-area row is omitted in favor of the parking-only r
 
 To repeat the regional discovery request for review, run `python tools/discover_osm.py --output osm_candidates.json`. This writes a candidate file without changing the deployed catalog. Check state boundaries, duplicates, operation and access before adding records to the master workbook.
 
-No additional copyrighted logos were downloaded. Existing bundled assets whose provenance marks an official operator source remain enabled for place identification; other brands use neutral symbols. See `data/LOGO_SOURCES.json`. Trademarks remain with their owners; this package does not assert an endorsement or a new commercial logo license.
+The supplied logo library is retained with its existing provenance. Missing Wendy's, Taco Bell, Pizza Hut, Dairy Queen and Starbucks marks were collected from the brands' official sites on November 2, 2026 and bundled as data URLs in `data/brand-logos.json`. Iowa 80 Kitchen uses the existing Iowa 80 campus mark. The image bytes and source URLs are recorded in `data/LOGO_SOURCES.json`. Trademarks remain with their owners; this package does not assert an endorsement or a new commercial logo license.
+
+The attempted wider food import did not complete: the primary Overpass server returned a capacity error and the alternative server request was rejected. The shipped food catalog still contains the 213 supplied operator listings. Food-type selections are implemented, but categories without sourced records correctly return no collected matches. This is not the requested comprehensive statewide food inventory.
 
 The OSM-derived database portion is distributed under ODbL. Operator and state-source records retain their provenance separately in the aggregate CSV; consult the publishers for terms applicable to their material. Preserve attribution and source columns when redistributing.
