@@ -1,4 +1,4 @@
-import {normalizeRoute} from './core.js?v=20261103-final';
+import {normalizeRoute} from './core.js?v=20261103-rest1';
 export class Router{
  constructor(base='https://router.project-osrm.org/route/v1/driving'){this.base=base;this.cache=new Map();this.queue=Promise.resolve();this.last=0;}
  async route(points){if(points.length<2||points.some(p=>p.length!==2||!p.every(Number.isFinite)||p[0]<-180||p[0]>180||p[1]<-90||p[1]>90))throw Error('Choose valid route coordinates.');

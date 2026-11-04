@@ -6,7 +6,7 @@
 2. Upload the contents of this folder to your existing repository root. Keep index.html, .nojekyll, css/, js/, and data/ together. Do not upload only the ZIP or place the whole folder one level below the site root.
 3. Keep your current Pages branch/root setting. After deployment, reload the site once to pick up the new files.
 
-The existing navy interface, original Plan form and clocks, Drive, Garage, Truck/Road Trip modes, favorites/private notes, foreground GPS controls, achievements, hotel/attraction records, and rest-area button are retained. Google map is deferred; its optional future key field is in Settings. Restaurant preferences remain Godfather's for generic pizza and Taco John's before Taco Bell for generic Mexican, subject to route suitability; named requests still win. Both Pizza Counter locations are saved as favorites once on first use.
+The existing navy interface, original Plan form and clocks, Drive, Garage, Truck/Road Trip modes, favorites/private notes, foreground GPS controls, achievements, and hotel/attraction records are retained. The full-width Next rest area button is on Drive directly beneath the next-stop card; its results appear below the button. GPS/navigation settings remain under More. Google map is deferred; its optional future key field is in Settings. Restaurant preferences remain Godfather's for generic pizza and Taco John's before Taco Bell for generic Mexican, subject to route suitability; named requests still win. Both Pizza Counter locations are saved as favorites once on first use.
 
 ## Included data
 

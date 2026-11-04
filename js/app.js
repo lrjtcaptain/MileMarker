@@ -1,15 +1,15 @@
-import {mergeTruckPlaces,overnightEligible,listedAmenities} from './truck-data.js?v=20261103-final';
-import {mergeIowaPlaces,compareFoodOffers,hasFoodCoordinates} from './iowa-food.js?v=20261103-final';
-import {parseCSV,point,MILE,project,candidates,progressFix,navigationURL,dieselLabel,itineraryRows,haversine} from './core.js?v=20261103-final';
-import {Router} from './routing.js?v=20261103-final';
-import {validateStopTargets,fitsDrivingTarget,foodPreferenceMatches,foodOfferTiming} from './planner.js?v=20261103-final';
-import {restoreOriginalPlan} from './original-plan-bridge.js?v=20261103-final';
-import {installFoodPicker} from './food-picker.js?v=20261103-final';
-import {foodTypeMatches,FOOD_TYPES} from './food-types.js?v=20261103-final';
+import {mergeTruckPlaces,overnightEligible,listedAmenities} from './truck-data.js?v=20261103-rest1';
+import {mergeIowaPlaces,compareFoodOffers,hasFoodCoordinates} from './iowa-food.js?v=20261103-rest1';
+import {parseCSV,point,MILE,project,candidates,progressFix,navigationURL,dieselLabel,itineraryRows,haversine} from './core.js?v=20261103-rest1';
+import {Router} from './routing.js?v=20261103-rest1';
+import {validateStopTargets,fitsDrivingTarget,foodPreferenceMatches,foodOfferTiming} from './planner.js?v=20261103-rest1';
+import {restoreOriginalPlan} from './original-plan-bridge.js?v=20261103-rest1';
+import {installFoodPicker} from './food-picker.js?v=20261103-rest1';
+import {foodTypeMatches,FOOD_TYPES} from './food-types.js?v=20261103-rest1';
 const $2=s=>document.querySelector(s),safe=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-async function csv(name){const r=await fetch(`data/${name}.csv?v=20261103-final`);if(!r.ok)throw Error(name+' data unavailable');return parseCSV(await r.text());}
+async function csv(name){const r=await fetch(`data/${name}.csv?v=20261103-rest1`);if(!r.ok)throw Error(name+' data unavailable');return parseCSV(await r.text());}
 const [originalPlaces,anchors,badges,settings]=await Promise.all(['places','anchors','achievements','settings'].map(csv));
-const iowaResponse=await fetch('data/iowa-food.json?v=20261103-final');if(!iowaResponse.ok)throw Error('Iowa inventory unavailable');const truckResponse=await fetch('data/truck-stops.json?v=20261103-final');if(!truckResponse.ok)throw Error('Truck-stop inventory unavailable');const places2=mergeTruckPlaces(mergeIowaPlaces(originalPlaces,await iowaResponse.json()),await truckResponse.json()).filter(p=>hasFoodCoordinates(p));
+const iowaResponse=await fetch('data/iowa-food.json?v=20261103-rest1');if(!iowaResponse.ok)throw Error('Iowa inventory unavailable');const truckResponse=await fetch('data/truck-stops.json?v=20261103-rest1');if(!truckResponse.ok)throw Error('Truck-stop inventory unavailable');const places2=mergeTruckPlaces(mergeIowaPlaces(originalPlaces,await iowaResponse.json()),await truckResponse.json()).filter(p=>hasFoodCoordinates(p));
 const config=Object.fromEntries(settings.map(x=>[x.key,x.value]));const router=new Router(config.routing_base);
 const stateKey='milemarker.beta2.v1';let saved={};try{saved=JSON.parse(localStorage.getItem(stateKey)||'{}')||{};}catch{}
 let mode=saved.mode==='roadtrip'?'roadtrip':'truck',optIn=!!saved.optIn,nav=saved.nav||'google',targets=saved.targets||[{kind:'park',hours:Number(saved.budgetHours)||Number(clockPlan.hours)||9,pause:30}],chosen=saved.chosen||[],earned=new Set(saved.earned||[]);
@@ -42,7 +42,14 @@ $2('#tripPanel').append(panel);
 $2('#mmCities').innerHTML=anchors.map(a=>`<option value="${safe(a.name)}"></option>`).join('');$2('#mmFrom').value=saved.from||'Downers Grove, IL';$2('#mmTo').value=saved.to||'Council Bluffs, IA';$2('#mmMode').value=mode;$2('#mmOpt').checked=optIn;$2('#mmDetour').value=config.max_detour_minutes||15;
 const localNow=new Date(Date.now()-new Date().getTimezoneOffset()*60000);$2('#mmDeparture').value=localNow.toISOString().slice(0,16);
 const driveTools=document.createElement('section');driveTools.id='mmDriveTools';driveTools.className='mm2';driveTools.innerHTML=`<div id="mmDriveRoute"></div><div class="box"><button id="mmRest">Next direction-correct rest area</button><div id="mmQuickRest"></div><details><summary>GPS & navigation</summary><div class="row spread"><div><span class="tag">FOREGROUND GPS</span><div id="mmGpsStatus" role="status">Location off</div></div><button id="mmGps">Enable GPS</button><button id="mmGpsOff">Stop GPS</button></div><progress id="mmProgress" max="100" value="0" aria-label="Route progress"></progress><label>Navigate with<select id="mmNav"><option value="google">Google Maps</option><option value="waze">Waze</option><option value="apple">Apple Maps</option><option value="truckerpath">Trucker Path</option></select></label></details><details><summary>All itinerary stops</summary><div id="mmDriveStops"></div></details></div>`;
-$2('#morePanel').append(driveTools);$2('#mmDriveRoute').classList.add('hidden');$2('#mmNav').value=nav;
+$2('#morePanel').append(driveTools);
+// Keep the quick rest action on Drive, immediately below the next-stop card.
+const restQuick=document.createElement('section');restQuick.id='mmRestQuick';restQuick.className='mm2';
+const restBox=document.createElement('div');restBox.className='box';
+$2('#mmRest').textContent='Next rest area';$2('#mmRest').style.width='100%';
+restBox.append($2('#mmRest'),$2('#mmQuickRest'));restQuick.append(restBox);
+$2('#drivePanel .drive-stop').after(restQuick);
+$2('#mmDriveRoute').classList.add('hidden');$2('#mmNav').value=nav;
 // Beta 2 owns routed Drive values. Hide old prototype tools and unsourced weather.
 $2('#legacyDriveTools').hidden=true;$2('#legacyDriveTools').classList.add('hidden');$2('#dashAlternatives').innerHTML='';$2('#dashAltToggle').closest('.dash-alternatives')?.classList.add('hidden');$2('#dashAltToggle').classList.add('hidden');
 const weather=$2('#weatherHeadline')?.closest('section');if(weather)weather.classList.add('hidden');$2('#dashAltToggle').closest('section').classList.add('hidden');

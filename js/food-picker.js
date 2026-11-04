@@ -1,4 +1,4 @@
-import {FOOD_TYPES,foodTypeMatches} from './food-types.js?v=20261103-final';
+import {FOOD_TYPES,foodTypeMatches} from './food-types.js?v=20261103-rest1';
 export function installFoodPicker({places,onPreferenceChange}){
  const q=s=>document.querySelector(s);const records=new Map(places.filter(p=>p.category==='food').map(p=>[p.id,p]));
  const options=FOOD_TYPES.map(([id,label])=>`<option value="${id}">${label}</option>`).join('');
