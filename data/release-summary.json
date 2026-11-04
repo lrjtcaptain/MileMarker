@@ -1,0 +1,12 @@
+{
+  "inventory_count": 505,
+  "processed_pages": 498,
+  "parking_counts": 464,
+  "alternate_source_records": 1,
+  "unresolved_profiles": 6,
+  "positive_parking": 386,
+  "zero_parking": 78,
+  "missing_parking": 41,
+  "restaurant_overlay": 4030,
+  "named_host_restaurants_added": 3
+}

@@ -1,7 +1,7 @@
-export const FOOD_TYPES=[['any','Any food'],['american','American'],['chinese','Chinese'],['sandwich','Sandwiches'],['mexican','Mexican'],['healthy','Healthy / lighter choices'],['greasy_spoon','Diner / greasy spoon'],['pizza','Pizza'],['coffee','Coffee / café']];
+export const FOOD_TYPES=[['any','Any food'],['american','American'],['chinese','Chinese'],['sandwich','Sandwiches'],['mexican','Mexican'],['healthy','Healthy / lighter choices'],['greasy_spoon','Diner / greasy spoon'],['pizza','Pizza'],['coffee','Coffee / café'],['italian','Italian'],['steakhouse','Steakhouses'],['seafood','Seafood'],['barbecue','Barbecue'],['thai','Thai'],['indian','Indian'],['japanese','Japanese / sushi'],['vietnamese','Vietnamese'],['korean','Korean'],['bar_and_grill','Bar & grill']];
 export function foodTypeMatches(place,type='any'){
  if(type==='any'||!type)return true;
- const types=String(place.food_style||stylesFromCuisine(place.cuisine||'',place.brand||place.name||'')).split(/[;,|]/).map(x=>x.trim());
+ const types=String([place.food_style,stylesFromCuisine(place.cuisine||'',place.brand||place.name||'')].filter(Boolean).join(';')).split(/[;,|]/).map(x=>x.trim());
  return types.includes(type);
 }
 export function stylesFromCuisine(cuisine='',brand=''){
@@ -14,5 +14,5 @@ export function stylesFromCuisine(cuisine='',brand=''){
  if(/diner|pancake|greasy.spoon/.test(s))out.push('greasy_spoon');
  if(/pizza|godfather/.test(s))out.push('pizza');
  if(/coffee|cafe|café|starbucks/.test(s))out.push('coffee');
- return [...new Set(out)].join(';');
+ for(const [pattern,type] of [[/italian/,'italian'],[/steak/,'steakhouse'],[/seafood/,'seafood'],[/barbecue|bbq/,'barbecue'],[/thai/,'thai'],[/indian/,'indian'],[/japanese|sushi/,'japanese'],[/vietnamese/,'vietnamese'],[/korean/,'korean'],[/bar.and.grill/,'bar_and_grill']])if(pattern.test(s))out.push(type);return [...new Set(out)].join(';');
 }

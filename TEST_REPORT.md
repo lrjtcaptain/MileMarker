@@ -1,17 +1,9 @@
-# Final repair verification — November 2, 2026
+# November 3 upload verification
 
-45 automated tests passed. Run `npm test` from this folder.
+61 automated tests passed on November 3, 2026.
 
-Live GitHub Pages verification:
-- All eight restaurant brands rendered successfully with complete images and nonzero natural dimensions: Godfather’s, Taco John’s, Wendy’s, Taco Bell, Pizza Hut, Dairy Queen, Starbucks, and Iowa 80 Kitchen (campus logo).
-- Logos are bundled image data, without third-party hotlink dependence. Sources are recorded in data/LOGO_SOURCES.json.
-- Editable clocks input is immediately under the clocks question; plus/minus operate that same field.
-- Downers Grove to Council Bluffs: entered park at 7 hours FIRST and food at 3 hours SECOND. Results automatically ordered food then parking, without an ordering error.
-- Typed Godfathers produced Davenport at 2h50, Wilton at 3h19, and Iowa City at 3h48, with actual routed timing and explicit truck-access review. No other restaurant substituted.
-- Confirmed Davenport and saved the complete itinerary. Drive showed that exact Godfather’s, its loaded logo, phone link, details and navigation. Parking remained available as the middle/next itinerary entry. Parking candidates are limited by current coverage; the selected Altoona option was earlier than seven hours, clearly labeled.
-- Drive starts with the next-stop card. Expanded route tools are on Plan/More.
+The automated suite covers routing fixtures, rest-area direction, original Plan layout/controls, hours and stop ordering, explicit food requests, generic pizza/Mexican preferences, Iowa restaurant merges, favorites, all 505 directory records, zero/missing parking exclusion, fuel availability, and positive-only amenities. Run npm test from this folder.
 
-Remaining limitations:
-- The starter food directory has 213 sourced records. Food categories are selectable, but broader statewide restaurant coverage is not complete; some categories have few or no listings.
-- The reported iPhone location-permission denial has not been reproduced or resolved on the actual phone. Existing geolocation permission handling was retained; manual starting-town selection works.
-- Road miles use OSRM car routing, without truck clearance or traffic certification. Live routing and discovery require internet. Diesel prices remain empty unless sourced with timestamp.
+All classic app scripts and ES module files are checked for syntax. The package checks verify local assets and imports, both inventory loaders, stable IDs, and the ZIP root. The existing layout/style files are retained. No Google Maps script is loaded.
+
+Live browser/phone GPS and public routing-service availability have not been verified for this release. The browser tool rejected file:// previews; that restriction was not bypassed. Automated checks do not establish live device behavior. The retained earlier report's live-device claims are not used as verification for this release.

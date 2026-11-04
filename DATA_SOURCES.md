@@ -21,3 +21,8 @@ The supplied logo library is retained with its existing provenance. Missing Wend
 The attempted wider food import did not complete: the primary Overpass server returned a capacity error and the alternative server request was rejected. The shipped food catalog still contains the 213 supplied operator listings. Food-type selections are implemented, but categories without sourced records correctly return no collected matches. This is not the requested comprehensive statewide food inventory.
 
 The OSM-derived database portion is distributed under ODbL. Operator and state-source records retain their provenance separately in the aggregate CSV; consult the publishers for terms applicable to their material. Preserve attribution and source columns when redistributing.
+
+
+## November 3 statewide integration
+
+The original user-provided Illinois/Iowa directory map sources supply 505 stable IDs and coordinates. Detail pages were retrieved through web search/open, with their exact URLs on each record. data/collection-audit.json records retrieval outcomes; truck-stops.json records current merged values and alternate-source provenance. Only on-site amenities are merged; exit-area services are kept separately. OpenStreetMap restaurant data is attributed under ODbL.
